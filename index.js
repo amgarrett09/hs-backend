@@ -5,7 +5,7 @@ const corsMiddleware = require("restify-cors-middleware");
 
 const cors = corsMiddleware({
   preflightMaxAge: 5,
-  origins: ["http://localhost:3000"],
+  origins: ["http://localhost:3000", "https://hockey-scrub.herokuapp.com"],
   allowHeaders: ["API-token"],
   exposeHeaders: ["API-Token-Expiry"]
 });

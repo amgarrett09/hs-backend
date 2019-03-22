@@ -18,7 +18,7 @@ db.on("error", err => console.error(err));
 
 db.once("open", async () => {
   const res = await fetch(
-    "https://statsapi.web.nhl.com/api/v1/teams?expand=team.roster&season=19881989"
+    "https://statsapi.web.nhl.com/api/v1/teams?expand=team.roster"
   );
   const json = await res.json();
 
