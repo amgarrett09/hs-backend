@@ -1,22 +1,8 @@
 const errors = require("restify-errors");
-const AutoComplete = require("../lib/autocomplete/index");
-
 const Player = require("../models/Player");
 
-// Create an autocomplete trie and add every player in database to it
-const trie = new AutoComplete();
-const init = async () => {
-  players = await Player.find({});
-  players.forEach(player => {
-    const { name, reverseName } = player;
-    trie.add(name);
-    trie.add(reverseName);
-  });
-};
-init();
-
-module.exports = server => {
-  server.get("/api/v1/autocomplete/:st", (req, res, next) => {
+module.exports = (server, trie) => {
+  server.get("/v1/autocomplete/:st", (req, res, next) => {
     if (req.params.st) {
       const out = trie.suggest(req.params.st);
       res.send({ suggestions: out });
@@ -26,7 +12,7 @@ module.exports = server => {
     }
   });
 
-  server.get("/api/v1/player/:name", async ({ params }, res, next) => {
+  server.get("/v1/player/:name", async ({ params }, res, next) => {
     if (!params.name) {
       return next(new errors.MissingParameterError("Missing player name"));
     }
