@@ -2,7 +2,7 @@ const errors = require("restify-errors");
 const Player = require("../models/Player");
 
 module.exports = (server, trie) => {
-  server.get("/v1/autocomplete/:st", (req, res, next) => {
+  server.get("/api/v1/autocomplete/:st", (req, res, next) => {
     if (req.params.st) {
       const out = trie.suggest(req.params.st);
       res.send({ suggestions: out });
@@ -12,7 +12,7 @@ module.exports = (server, trie) => {
     }
   });
 
-  server.get("/v1/player/:name", async ({ params }, res, next) => {
+  server.get("/api/v1/player/:name", async ({ params }, res, next) => {
     if (!params.name) {
       return next(new errors.MissingParameterError("Missing player name"));
     }
